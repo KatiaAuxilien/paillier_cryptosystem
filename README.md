@@ -5,6 +5,25 @@
 
 > Program to encrypt and decrypt images (.pgm) with Paillier cryptosystem.
 
+## Installation
+
+
+Firstly, you need to clone or download the project. Through your usage, we recommend to `git pull` to update the project.
+
+Then, install `g++` version 11.
+```sh
+$ sudo apt install g++-11
+```
+
+You maybe need to install `make`, so use the command :
+```sh
+$ sudo apt install make
+```
+In order that you can compile to each modification, they have at your proposal the `make` programs in folders `main`, use the command :
+```sh
+$ make -f [makefile]
+```
+
 ## Usage
 
 ### Encryption
