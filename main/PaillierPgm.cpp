@@ -14,11 +14,7 @@
  *
  *******************************************************************************/
 
-// #include "../../../include/model/image/image_pgm.hpp"
-// #include "../../../include/model/encryption/Paillier/Paillier.hpp"
-// #include "../../../include/model/encryption/Paillier/keys/Paillier_private_key.hpp"
-// #include "../../../include/model/encryption/Paillier/keys/Paillier_public_key.hpp"
-#include "../../../include/controller/PaillierControllerPGM.hpp"
+#include "../include/controller/PaillierControllerPGM.hpp"
 
 #include <cctype>
 #include <fstream>
@@ -64,13 +60,14 @@ int main(int argc, char **argv)
 
 	/*********************** Instanciations de Paillier en fonction de n ***********************/
 
-	uint64_t n = controller->getModel()->getN();
+	uint64_t n = controller->getModel()->getInstance()->getPublicKey().getN();
 	/*********************** Chiffrement ***********************/
 
 	if (isEncryption)
 	{
-		printf("Pub Key G = %" PRIu64 "\n", controller->getModel()->getPublicKey().getG());
-		printf("Pub Key N = %" PRIu64 "\n", controller->getModel()->getPublicKey().getN());
+		printf("Pub Key G = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getG());
+		printf("Pub Key N = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getN());
+
 		if (n <= 256)
 		{
 			Paillier<uint8_t, uint16_t> paillier;

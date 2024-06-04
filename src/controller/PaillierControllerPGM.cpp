@@ -94,6 +94,7 @@ void PaillierControllerPGM::checkParameters(char *arg_in[], int size_arg, bool p
 
         uint64_t n = p * q;
 		this->model->getInstance()->setN(n);
+	
 		Paillier<uint64_t, uint64_t> tempPaillier;
 		this->model->getInstance()->setPaillierGenerationKey(tempPaillier);
 
@@ -178,6 +179,21 @@ void PaillierControllerPGM::checkParameters(char *arg_in[], int size_arg, bool p
     }
 }
 
+
+	uint8_t PaillierControllerPGM::histogramExpansion(OCTET ImgPixel, bool recropPixels)
+	{
+		uint8_t pixel;
+		if (recropPixels)
+		{
+			uint64_t n = model->getInstance()->getPublicKey().getN();
+			pixel = (ImgPixel * n) / 256;
+		}
+		else
+		{
+			pixel = ImgPixel;
+		}
+		return pixel;
+	}
 /*********************** Chiffrement/Déchiffrement ***********************/
 
 
