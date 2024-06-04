@@ -99,8 +99,6 @@ void PaillierController::generateAndSaveKeyPair()
     uint64_t mu = 0;
     		
             
-    printf("db Pub Key n = %" PRIu64 "\n", this->model->getInstance()->getN());
-
     uint64_t g = this->model->getInstance()->getPaillierGenerationKey().generate_g_64t(this->model->getInstance()->getN(), this->model->getInstance()->getLambda());
 
 
@@ -113,7 +111,6 @@ void PaillierController::generateAndSaveKeyPair()
                                                      g);
 
     this->model->getInstance()->setLambda(lambda);
-    printf("db Pub Key n = %" PRIu64 "\n", this->model->getInstance()->getN());
 
     if (mu == 0)
     {
@@ -124,7 +121,8 @@ void PaillierController::generateAndSaveKeyPair()
     this->model->getInstance()->setG(g);
 
     PaillierPrivateKey tempPK = PaillierPrivateKey(this->model->getInstance()->getLambda(), 
-                                                this->model->getInstance()->getMu());
+                                                this->model->getInstance()->getMu(),
+                                                this->model->getInstance()->getN());
     PaillierPublicKey tempPubK = PaillierPublicKey(this->model->getInstance()->getN(),
                                                                 this->model->getInstance()->getG());
 
@@ -164,7 +162,7 @@ void PaillierController::generateAndSaveKeyPair()
         this->view->getInstance()->error_failure( "Error ! Opening Paillier_private_key.bin\n");
         exit(EXIT_FAILURE);
     }
-    PaillierPublicKey pk = this->model->getInstance()->getPublicKey();
+    PaillierPrivateKey pk = this->model->getInstance()->getPrivateKey();
     fwrite(&pk, sizeof(PaillierPrivateKey), 1, f_private_key);
 
     fclose(f_private_key);
@@ -178,7 +176,7 @@ void PaillierController::generateAndSaveKeyPair()
         exit(EXIT_FAILURE);
     }
 
-    PaillierPrivateKey pubk = this->model->getInstance()->getPrivateKey();
+    PaillierPublicKey pubk = this->model->getInstance()->getPublicKey();
     fwrite(&pubk, sizeof(PaillierPublicKey), 1, f_public_key);
 
     fclose(f_public_key);

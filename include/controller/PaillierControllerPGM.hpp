@@ -239,6 +239,11 @@ void PaillierControllerPGM::decrypt(bool distributeOnTwo, Paillier<T_in, T_out> 
 	mu = model->getInstance()->getPrivateKey().getMu();
 	n = model->getInstance()->getPrivateKey().getN();
 
+	printf("Pub Key N = %" PRIu64 "\n", this->model->getInstance()->getPrivateKey().getN());
+	printf("Priv Key lambda = %" PRIu64 "\n", this->model->getInstance()->getPrivateKey().getLambda());
+	printf("Priv Key mu = %" PRIu64 "\n", this->model->getInstance()->getPrivateKey().getMu());
+
+
 	OCTET *ImgOutDec;
 	image_pgm::lire_nb_lignes_colonnes_image_p(cNomImgLue, &nH, &nW);
 	nTaille = nH * nW;

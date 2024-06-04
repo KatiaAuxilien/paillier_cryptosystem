@@ -62,6 +62,12 @@ int main(int argc, char **argv)
 
 	uint64_t n = controller->getModel()->getInstance()->getPublicKey().getN();
 	/*********************** Chiffrement ***********************/
+        printf("p = %" PRIu64 "\n", controller->getModel()->getInstance()->getP());
+        printf("q = %" PRIu64 "\n", controller->getModel()->getInstance()->getQ());
+        printf("Pub Key G = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getG());
+        printf("Pub Key N = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getN());
+        printf("Priv Key lambda = %" PRIu64 "\n", controller->getModel()->getInstance()->getPrivateKey().getLambda());
+        printf("Priv Key mu = %" PRIu64 "\n", controller->getModel()->getInstance()->getPrivateKey().getMu());
 
 	if (isEncryption)
 	{
