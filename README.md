@@ -40,7 +40,8 @@ $ ./Paillier_pgm_main.out d [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]
 
 The image to encrypt or to decrypt can be specify after the key or the options, or at the end.
 
-### Options : P and Q
+### Options
+#### P and Q
 
 ```sh
 $ ./Paillier_pgm_main.out encryption [p] [q] [FILE.PGM] 
@@ -48,7 +49,7 @@ $ ./Paillier_pgm_main.out encryption [p] [q] [FILE.PGM]
 
 Encryption mode where you specify p and q arguments. p and q are prime number where pgcd(p * q,p-1 * q-1) = 1.
 
-### Keys
+#### Keys
 `-k` or `-key` to specify usage of private or public key, followed by `file.bin`, your key file.
 
 Encryption mode where you specify your public key file with format `.bin`.
@@ -65,10 +66,18 @@ The option ``-k` is optional, because it's obligatory to specify private key at 
 $ ./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]
 ```
 
-### Others
+#### Others
 
+`-distribution` or `-distr` ou `-d` to split encrypted pixel on two pixel.
 
+`-histogramexpansion` ou `-hexp` to specify during **encryption** that we want to transform the histogram befor image encryption.
 
+`-optlsbr` or `-olsbr` to specify that we want to use bit compression with encrypted through optimized r generation.
+<!-- 
+\verb|-optlsbrcomp| ou \verb|-olsbrc|  pour préciser qu'on souhaite utiliser la "compression" des pixels chiffrés en générant des valeurs aléatoires \(r\) favorable et en utilisant des compléments de chiffré pour élargir les valeurs.\\
+
+\verb|-optlsbrg| ou \verb|-olsbrg|  pour préciser qu'on souhaite effectuer une "compression" des pixels chiffrés en générant des valeurs aléatoires \(r\) favorable et en générant le paramètre \(g\) le plus optimisé pour favoriser cette compression.\\
+… -->
 
 
 
