@@ -99,11 +99,13 @@ $ ./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]
 … -->
 
 
-
 ## Author
 
 👤 **Auxilien Katia**
+
+* Website: https://katiaauxilien.github.io/
 * Github: [@KatiaAuxilien](https://github.com/KatiaAuxilien)
+* LinkedIn: [@katia-auxilien](https://linkedin.com/in/katia-auxilien)
 
 **Supervised by William PUECH**
 
