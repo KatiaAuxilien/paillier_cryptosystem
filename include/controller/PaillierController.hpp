@@ -27,6 +27,7 @@
 
 #include "../../include/model/Paillier_model.hpp"
 #include "../../include/view/commandLineInterface.hpp" // Gestion de l'affichage dans le terminal (couleurs, ...)
+// #include "../../include/model/filesystem/filesystemCommon.h" //Navigation dans le système de fichier
 
 class PaillierController
 {

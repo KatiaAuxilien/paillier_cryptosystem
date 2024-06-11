@@ -14,7 +14,8 @@
  *
  *******************************************************************************/
 
-#include "../include/controller/PaillierControllerPGM.hpp"
+
+#include "../../../include/controller/PaillierControllerPGM.hpp"
 
 #include <cctype>
 #include <fstream>
@@ -28,17 +29,17 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-	PaillierControllerPGM* controller = new PaillierControllerPGM();
+	PaillierControllerPGM *controller = new PaillierControllerPGM();
 
 	/*********************** Traitement d'arguments ***********************/
 
-	if (argc < 3)
+	if (argc < 3 && argc != 2)
 	{
 		printf("Usage : [e or ek or dk] [params] image_file.pgm\n e p q file.pgm\n ek public_key.bin image_file.pgm\n dk private_key.bin image_file_encrypted.pgm\n");
 		return 1;
 	}
 
-	bool parameters[5];
+	bool parameters[6];
 	controller->checkParameters(argv, argc, parameters);
 
 	bool isEncryption = parameters[0];
@@ -46,6 +47,13 @@ int main(int argc, char **argv)
 	bool distributeOnTwo = parameters[2];
 	bool recropPixels = parameters[3];
 	bool optimisationLSB = parameters[4];
+	bool needHelp = parameters[5];
+
+	if(needHelp)
+	{
+		controller->printHelp();
+		exit(EXIT_SUCCESS);
+	}
 
 	/*********************** Traitement de clé ***********************/
 
@@ -60,24 +68,23 @@ int main(int argc, char **argv)
 
 	/*********************** Instanciations de Paillier en fonction de n ***********************/
 
-	uint64_t n = controller->getModel()->getInstance()->getPublicKey().getN();
+	uint64_t n = controller->getModel()->getN();
 	/*********************** Chiffrement ***********************/
-        printf("p = %" PRIu64 "\n", controller->getModel()->getInstance()->getP());
-        printf("q = %" PRIu64 "\n", controller->getModel()->getInstance()->getQ());
-        printf("Pub Key G = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getG());
-        printf("Pub Key N = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getN());
-        printf("Priv Key lambda = %" PRIu64 "\n", controller->getModel()->getInstance()->getPrivateKey().getLambda());
-        printf("Priv Key mu = %" PRIu64 "\n", controller->getModel()->getInstance()->getPrivateKey().getMu());
 
 	if (isEncryption)
 	{
-		printf("Pub Key G = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getG());
-		printf("Pub Key N = %" PRIu64 "\n", controller->getModel()->getInstance()->getPublicKey().getN());
-
 		if (n <= 256)
 		{
-			Paillier<uint8_t, uint16_t> paillier;
-			controller->encrypt(distributeOnTwo, recropPixels,paillier);
+			if (!optimisationLSB)
+			{
+				Paillier<uint8_t, uint16_t> paillier;
+				controller->encrypt(distributeOnTwo, recropPixels, paillier);
+			}
+			if (optimisationLSB)
+			{
+				Paillier<uint8_t, uint16_t> paillier;
+				controller->encryptCompression(distributeOnTwo, recropPixels, paillier);
+			}
 		}
 		// else if (n > 256 && n <= 65535)
 		// {
@@ -93,12 +100,18 @@ int main(int argc, char **argv)
 	/*********************** Déchiffrement ***********************/
 	else
 	{
-		printf("Priv Key lambda = %" PRIu64 "\n", controller->getModel()->getPrivateKey().getLambda());
-		printf("Priv Key mu = %" PRIu64 "\n", controller->getModel()->getPrivateKey().getMu());
 		if (n <= 256)
 		{
-			Paillier<uint8_t, uint16_t> paillier;
-			controller->decrypt(distributeOnTwo,paillier);
+			if (!optimisationLSB)
+			{
+				Paillier<uint8_t, uint16_t> paillier;
+				controller->decrypt(distributeOnTwo, paillier);
+			}
+			if (optimisationLSB)
+			{
+				Paillier<uint8_t, uint16_t> paillier;
+				controller->decryptCompression(distributeOnTwo, paillier);
+			}
 		}
 		// else if (n > 256 && n <= 65535)
 		// {
@@ -112,5 +125,5 @@ int main(int argc, char **argv)
 		}
 	}
 
-	// delete controller;
+	exit(EXIT_SUCCESS);
 }

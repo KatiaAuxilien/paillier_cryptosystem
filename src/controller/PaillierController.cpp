@@ -97,8 +97,6 @@ uint64_t PaillierController::check_p_q_arg(char *arg)
 void PaillierController::generateAndSaveKeyPair()
 {
     uint64_t mu = 0;
-    		
-            
     uint64_t g = this->model->getInstance()->getPaillierGenerationKey().generate_g_64t(this->model->getInstance()->getN(), this->model->getInstance()->getLambda());
 
 
@@ -128,20 +126,13 @@ void PaillierController::generateAndSaveKeyPair()
 
     this->model->getInstance()->setPrivateKey(tempPK);
     this->model->getInstance()->setPublicKey(tempPubK);
-    printf("db Pub Key n = %" PRIu64 "\n", this->model->getInstance()->getPublicKey().getN());
-    printf("db  n = %" PRIu64 "\n", this->model->getInstance()->getN());
 
     if (this->model->getInstance()->getLambda() == 0 ||
         this->model->getInstance()->getMu() == 0 ||
         this->model->getInstance()->getP() == 0 ||
         this->model->getInstance()->getQ() == 0 ||
         this->model->getInstance()->getN() == 0 ||
-        this->model->getInstance()->getG() == 0 ||
-        this->model->getInstance()->getLambda() == 0 ||
-        this->model->getInstance()->getPrivateKey().getMu() == 0 ||
-        this->model->getInstance()->getPrivateKey().getLambda() == 0 ||
-        this->model->getInstance()->getPublicKey().getN() == 0 ||
-        this->model->getInstance()->getPublicKey().getG() == 0)
+        this->model->getInstance()->getG() == 0)
     {
         this->view->getInstance()->error_failure("Error in generation of private key.\n");
         printf("p = %" PRIu64 "\n", this->model->getInstance()->getP());
