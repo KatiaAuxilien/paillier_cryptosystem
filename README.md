@@ -98,6 +98,12 @@ $ ./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]
 \verb|-optlsbrg| ou \verb|-olsbrg|  pour préciser qu'on souhaite effectuer une "compression" des pixels chiffrés en générant des valeurs aléatoires \(r\) favorable et en générant le paramètre \(g\) le plus optimisé pour favoriser cette compression.\\
 … -->
 
+## Progression
+
+- [X] Add a -help -h option to print user's guide.
+- [ ] Generate documentation with dioxygen.
+- [ ] Implement LSB compression.
+- [ ] Implement new solution for size encryption. (to make program usable with n > 256)
 
 ## Author
 
@@ -111,9 +117,17 @@ $ ./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]
 
 * Website: https://www.lirmm.fr/~wpuech/
 
+**Based on Norman HUTTE's and Bianca JANSEN VAN RENSBURG's code**
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2024 Katia Auxilien.
+This project is MIT licensed.
+
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
