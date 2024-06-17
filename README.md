@@ -4,6 +4,7 @@
 </p>
 
 > Program to encrypt and decrypt images (.pgm) with Paillier cryptosystem.
+> Repository dedicated to an internship in the ICAR team at LIRMM.
 
 ## Installation
 
