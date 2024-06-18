@@ -6,6 +6,8 @@
 > Program to encrypt and decrypt images (.pgm) with Paillier cryptosystem.
 > Repository dedicated to an internship in the ICAR team at LIRMM.
 
+📄 [Documentation](https://katiaauxilien.github.io/encryption_images_Paillier/html/) *in progress*
+
 ## Installation
 
 
