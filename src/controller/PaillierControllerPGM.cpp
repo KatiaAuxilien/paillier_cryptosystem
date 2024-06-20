@@ -193,7 +193,7 @@ void PaillierControllerPGM::checkParameters(char *arg_in[], int size_arg, bool p
 
 void PaillierControllerPGM::printHelp()
 {
-	this->view->getInstance()->help("./PaillierPgm.out\nNAME\n \t./PaillierPgm.out - Encrypt or decrypt .pgm file\n\nSYNOPSIS\n\t./PaillierPgm.out [MODE]... [OPTIONS]... [FILE]...	\n\nDESCRIPTION\n	Program to encrypt or decrypt portable graymap file format.	\n\nOPTIONS	\n\t./Paillier_pgm_main.out encryption [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out encrypt [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out enc [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out e [ARGUMENTS] [FILE.PGM]\n\t\t encrypt file.\n	\n\t./Paillier_pgm_main.out decryption [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out decrypt [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out dec [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out d [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]*\n\t\tdecrypt file.	\n\t\tThe image to encrypt or to decrypt can be specify after the key or the options, or at the end.	\n	\n\t./Paillier_pgm_main.out encryption [p] [q] [FILE.PGM]	\n\t\t Encryption mode where you specify p and q arguments. p and q are prime number where pgcd(p * q,p-1 * q-1) = 1.	\n\n\t-k, -key	\n\t\t specify usage of private or public key, followed by file.bin, your key file. Encryption mode where you specify your public key file with format .bin.	\n\n\t./Paillier_pgm_main.out encryption -k [PUBLIC KEY FILE .BIN] [FILE.PGM]	\n\t./Paillier_pgm_main.out encryption -key [PUBLIC KEY FILE .BIN] [FILE.PGM]	\n\t./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]	\n\t\tdecryption mode where you specify your private key with format .bin. The option -k is optional, because it\'s obligatory to specify private key at decryption.\n\n\t-distribution, -distr, -d	\n\t\tto split encrypted pixel on two pixel.\n	\n\t-histogramexpansion,-hexp	\n\t\tto specify during **encryption** that we want to transform the histogram befor image encryption.\n	\n\t-optlsbr, -olsbr\n\tto specify that we want to use bit compression with encrypted through optimized r generation.\n\n");
+	this->view->getInstance()->help("./PaillierPgm.out\nNAME\n \t./PaillierPgm.out - Encrypt or decrypt .pgm file\n\nSYNOPSIS\n\t./PaillierPgm.out [MODE]... [OPTIONS]... [FILE]...	\n\nDESCRIPTION\n	Program to encrypt or decrypt portable graymap file format.	\n\nOPTIONS	\n\t./Paillier_pgm_main.out encryption [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out encrypt [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out enc [ARGUMENTS] [FILE.PGM]	\n\t./Paillier_pgm_main.out e [ARGUMENTS] [FILE.PGM]\n\t\t encrypt file.\n	\n\t./Paillier_pgm_main.out decryption [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out decrypt [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out dec [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]	\n\t./Paillier_pgm_main.out d [PRIVATE KEY FILE .BIN] [FILE.PGM] [ARGUMENTS]*\n\t\tdecrypt file.	\n\t\tThe image to encrypt or to decrypt can be specify after the key or the options, or at the end.	\n	\n\t./Paillier_pgm_main.out encryption [p] [q] [FILE.PGM]	\n\t\t Encryption mode where you specify p and q arguments. p and q are prime number where pgcd(p * q,p-1 * q-1) = 1.	\n\n\t-k, -key	\n\t\t specify usage of private or public key, followed by file.bin, your key file. Encryption mode where you specify your public key file with format .bin.	\n\n\t./Paillier_pgm_main.out encryption -k [PUBLIC KEY FILE .BIN] [FILE.PGM]	\n\t./Paillier_pgm_main.out encryption -key [PUBLIC KEY FILE .BIN] [FILE.PGM]	\n\t./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]	\n\t\tdecryption mode where you specify your private key with format .bin. The option -k is optional, because it\'s obligatory to specify private key at decryption.\n\n\t-distribution, -distr, -d	\n\t\tto split encrypted pixel on two pixel.\n	\n\t-histogramexpansion,-hexp	\n\t\tto specify during **encryption** that we want to transform the histogram befor image encryption.\n	\n\t-optlsbr, -olsbr\n\tto specify that we want to use bit compression with encrypted through optimized r generation.\n\n\tWARNING : You can't combine -distribution and -optlsbr, if you do that the priority is -optlsbr.\n\n");
 }
 
 uint8_t PaillierControllerPGM::histogramExpansion(OCTET ImgPixel, bool recropPixels)
@@ -214,6 +214,115 @@ uint8_t PaillierControllerPGM::histogramExpansion(OCTET ImgPixel, bool recropPix
 
 uint16_t *PaillierControllerPGM::compressBits(uint16_t *ImgInEnc, int nb_lignes, int nb_colonnes)
 {
+	int nbPixel = nb_colonnes * nb_lignes;
+	if (nbPixel > 132710400)
+	{
+		this->view->getInstance()->error_failure("Maximum image size is 132 710 400 pixels.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// Taille max image 15360*8640l
+	// std::bitset<2 123 366 400> finalSet;
+	std::bitset<2123366400> *finalSet = new std::bitset<2123366400>;
+
+	int j = 0;
+	std::bitset<16> tempSet;
+
+	for (int i = 0; i < nbPixel; i++)
+	{
+		tempSet = ImgInEnc[i];
+		for (int k = 15; k >= 5; k--)
+		{
+			finalSet->set(j, tempSet[k]);
+			j++;
+		}
+	}
+
+	int size_ImgIn11bits = nbPixel * 11;
+	int size_ImgOutEnc16bits = ceil((double)size_ImgIn11bits/16);
+
+	uint16_t * ImgOutEnc16bits = new uint16_t[size_ImgOutEnc16bits];
+
+
+	int k = 0;
+	for (int i = 0; i < size_ImgOutEnc16bits; i++)
+	{
+		std::bitset<16> SetImgOutEnc16bits;
+		for (int l = 0; l < 16; l++)
+		{
+			SetImgOutEnc16bits.set(l, (*finalSet)[k]);
+			k++;
+		}
+
+		ImgOutEnc16bits[i] = (uint16_t)SetImgOutEnc16bits.to_ulong();
+	}
+
+	return ImgOutEnc16bits;
+}
+
+uint16_t *PaillierControllerPGM::decompressBits(uint16_t *ImgInEnc, int nb_lignes, int nb_colonnes, int nTailleOriginale)
+{
+	// TODO : Trouver une solution
+	int sizeImg = (nb_lignes * nb_colonnes * 16) /11;
+	int sizeComp = nb_lignes * nb_colonnes;
+	std::bitset<2123366400> *setTemp = new std::bitset<2123366400>;
+
+	int j = 0;
+	for (int i = 0; i < sizeComp; i++)
+	{
+		std::bitset<16> setImg = ImgInEnc[i];
+		for (int k = 0; k < 16; k++)
+		{
+			setTemp->set(j, setImg[k]);
+			j++;
+		}
+	}
+
+	// std::cout << setTemp << std::endl;
+
+	// step 2 : On écrit ce bitset dans le tableau originalImg
+	// int sizeOriginal = nb_lignes * nb_colonnes * 16;
+	int sizeOriginal = nTailleOriginale * 16;
+
+	//TODO : Ajouter l'étape pour récupérer en argument la taille originale.
+
+	uint16_t *originalImg = new uint16_t[sizeOriginal];
+
+	j = 0;
+	for (int i = 0; i < sizeOriginal; i++)
+	{
+		std::bitset<16> setImg;
+		for (int k = 15; k >= 5; k--)
+		{
+			setImg.set(k, (*setTemp)[j]);
+			j++;
+		}
+		originalImg[i] = (uint16_t)setImg.to_ulong();
+		// std::cout << setImg << std::endl;
+	}
+
+	return originalImg;
+}
+
+pair<int, int> PaillierControllerPGM::decomposeDimension(int n){
+    int facteur1 = 1, facteur2 = n;
+    for (int i = 2; i <= n / 2; i++) {
+        if (n % i == 0) {
+            int diff = abs(i - n / i);
+            int diff_actuelle = abs(facteur1 - facteur2);
+            if (diff < diff_actuelle) {
+                facteur1 = i;
+                facteur2 = n / i;
+            }
+        }
+    }
+    return make_pair(facteur1, facteur2);
+}
+
+/*compression with mod 32 */
+/*
+uint16_t *PaillierControllerPGM::compressBits(uint16_t *ImgInEnc, int nb_lignes, int nb_colonnes)
+{
 
 	int nbPixel = nb_colonnes * nb_lignes;
 	if (nbPixel > 132710400)
@@ -223,7 +332,9 @@ uint16_t *PaillierControllerPGM::compressBits(uint16_t *ImgInEnc, int nb_lignes,
 	}
 
 	// Taille max image 15360*8640l
-	std::bitset<2123366400> finalSet;
+	// std::bitset<2123366400> finalSet;
+	std::bitset<2123366400> *finalSet = new std::bitset<2123366400>;
+
 	int j = 0;
 	std::bitset<16> tempSet;
 
@@ -232,32 +343,33 @@ uint16_t *PaillierControllerPGM::compressBits(uint16_t *ImgInEnc, int nb_lignes,
 		tempSet = ImgInEnc[i];
 		for (int k = 15; k >= 5; k--)
 		{
-			finalSet.set(j, tempSet[k]);
+			finalSet->set(j, tempSet[k]);
 			j++;
 		}
-		std::cout << i << ' ' << tempSet << std::endl;
+		// std::cout << i << ' ' << tempSet << std::endl;
 	}
 
 	int size_ImgIn11bits = nbPixel * 11;
+	int size_ImgOutEnc16bits = ceil((double)size_ImgIn11bits/16);
 
-	for (int i = 0; i < size_ImgIn11bits; i++)
-	{
-		std::cout << finalSet[i];
-		if ((i + 1) % 11 == 0)
-		{ // afficher un saut de ligne tous les 11 bits
-			std::cout << std::endl;
-		}
-	}
+	// for (int i = 0; i < size_ImgIn11bits; i++)
+	// {
+	// 	std::cout << finalSet[i];
+	// 	if ((i + 1) % 11 == 0)
+	// 	{ // afficher un saut de ligne tous les 11 bits
+	// 		std::cout << std::endl;
+	// 	}
+	// }
 
-	uint16_t ImgOutEnc16bits[12];
+	uint16_t * ImgOutEnc16bits = new uint16_t[size_ImgOutEnc16bits];
 
 	int k = 0;
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < size_ImgOutEnc16bits; i++)
 	{
 		std::bitset<16> SetImgOutEnc16bits;
 		for (int l = 0; l < 16; l++)
 		{
-			SetImgOutEnc16bits.set(l, finalSet[k]);
+			SetImgOutEnc16bits.set(l, &finalSet[k]);
 			k++;
 		}
 
@@ -268,7 +380,8 @@ uint16_t *PaillierControllerPGM::compressBits(uint16_t *ImgInEnc, int nb_lignes,
 
 	return ImgOutEnc16bits;
 }
-
+*/
+/*
 uint16_t *PaillierControllerPGM::decompressBits(uint16_t *ImgInEnc, int nb_lignes, int nb_colonnes)
 {
 	// TODO : Trouver une solution pour les valeurs comme 12, 192, 15, etc.
@@ -287,9 +400,12 @@ uint16_t *PaillierControllerPGM::decompressBits(uint16_t *ImgInEnc, int nb_ligne
 	std::cout << setTemp << std::endl;
 
 	// step 2 : On écrit ce bitset dans le tableau originalImg
-	uint16_t originalImg[15];
+	int sizeOriginal = nb_lignes * nb_colonnes * 16;
+
+	uint16_t *originalImg = new uint16_t[sizeOriginal];
+
 	j = 0;
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < sizeOriginal; i++)
 	{
 		std::bitset<16> setImg;
 		for (int k = 15; k >= 5; k--)
@@ -300,7 +416,11 @@ uint16_t *PaillierControllerPGM::decompressBits(uint16_t *ImgInEnc, int nb_ligne
 		originalImg[i] = (uint16_t)setImg.to_ulong();
 		std::cout << setImg << std::endl;
 	}
+
+	return originalImg;
 }
+*/
+
 
 /************** n > 8bits**************/
 /*
