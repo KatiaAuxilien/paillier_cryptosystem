@@ -1,18 +1,19 @@
 /******************************************************************************
  * ICAR_Library
  *
- * Fichier : ImageBase.cpp
+ * File : ImageBase.cpp
  *
- * Description : Voir le fichier .h
+ * Description : Implementation of base class containing some basic
+ * functionalities for images
  *
- * Auteur : Mickael Pinto
+ * Author : Mickael Pinto
  *
- * Mail : mickael.pinto@live.fr
+ * Mail : mickael.pinto\live.fr
  *
  * Date : Octobre 2012
  *
  *******************************************************************************/
-#include "../../include/image/ImageBase.hpp"
+#include "../../../include/model/image/ImageBase.hpp"
 
 ImageBase::ImageBase(void)
 {

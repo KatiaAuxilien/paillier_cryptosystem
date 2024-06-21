@@ -6,7 +6,7 @@
 > Program to encrypt and decrypt images (.pgm) with Paillier cryptosystem.
 > Repository dedicated to an internship in the ICAR team at LIRMM.
 
-📄 [Documentation](https://katiaauxilien.github.io/encryption_images_Paillier/html/) *in progress*
+📄 [Documentation](https://katiaauxilien.github.io/encryption_images_Paillier/doc/)
 
 ## Installation
 
@@ -108,7 +108,7 @@ WARNING : You can't combine `-distribution` and `-optlsbr`, if you do that the p
 
 - [X] Add a -help -h option to print user's guide.
 - [X] Generate documentation with dioxygen. 
-  - [ ] Complete documentation. [*in progress*]
+  - [X] Complete documentation. [*in progress*]
 - [X] Implement LSB compression.
 - [ ] Implement new solution for size encryption. (to make program usable with n > 256)
 
