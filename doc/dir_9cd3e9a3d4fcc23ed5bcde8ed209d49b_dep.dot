@@ -1,0 +1,23 @@
+digraph "C:/Users/Katia/Documents/GitHub/encryption_images_Paillier/src/model"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_3d7b52de6e4db54979953f1732c89cd9 {
+    graph [ bgcolor="#efedf7", pencolor="grey50", label="src", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_3d7b52de6e4db54979953f1732c89cd9.html",tooltip=""]
+  subgraph clusterdir_9cd3e9a3d4fcc23ed5bcde8ed209d49b {
+    graph [ bgcolor="#efedf7", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_9cd3e9a3d4fcc23ed5bcde8ed209d49b.html",tooltip=""]
+    dir_9cd3e9a3d4fcc23ed5bcde8ed209d49b [shape=plaintext, label="model"];
+  dir_9e9625a54798f577f670b2783f6ae4de [label="encryption", fillcolor="#ada2d6", color="grey25", style="filled", URL="dir_9e9625a54798f577f670b2783f6ae4de.html",tooltip=""];
+  dir_a3324686cd485336425039090fb192c6 [label="filesystem", fillcolor="#ada2d6", color="grey25", style="filled", URL="dir_a3324686cd485336425039090fb192c6.html",tooltip=""];
+  dir_fd85b9913c911140ca44b78a9959754e [label="image", fillcolor="#ada2d6", color="grey25", style="filled", URL="dir_fd85b9913c911140ca44b78a9959754e.html",tooltip=""];
+  }
+  }
+  dir_ea12a3dad00ed81478205bf7488b69ad [label="include", fillcolor="#efedf7", color="red", style="filled,dashed", URL="dir_ea12a3dad00ed81478205bf7488b69ad.html",tooltip=""];
+  dir_9cd3e9a3d4fcc23ed5bcde8ed209d49b->dir_ea12a3dad00ed81478205bf7488b69ad [headlabel="9", labeldistance=1.5 headhref="dir_000015_000010.html" href="dir_000015_000010.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_9e9625a54798f577f670b2783f6ae4de->dir_ea12a3dad00ed81478205bf7488b69ad [headlabel="2", labeldistance=1.5 headhref="dir_000003_000010.html" href="dir_000003_000010.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_a3324686cd485336425039090fb192c6->dir_ea12a3dad00ed81478205bf7488b69ad [headlabel="2", labeldistance=1.5 headhref="dir_000006_000010.html" href="dir_000006_000010.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_fd85b9913c911140ca44b78a9959754e->dir_ea12a3dad00ed81478205bf7488b69ad [headlabel="4", labeldistance=1.5 headhref="dir_000009_000010.html" href="dir_000009_000010.html" color="steelblue1" fontcolor="steelblue1"];
+}
