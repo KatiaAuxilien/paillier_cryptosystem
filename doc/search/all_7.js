@@ -31,7 +31,7 @@ var searchData=
   ['getvalidity_28',['getValidity',['../class_image_base.html#a0c352ac615f717d33c462fbadc8f9204',1,'ImageBase']]],
   ['getview_29',['getView',['../class_paillier_controller.html#a122b2a6ec110fe84fbdd9d37db2e291f',1,'PaillierController']]],
   ['getwidth_30',['getWidth',['../class_image_base.html#aba23064ee3a63d34affd98302bba524a',1,'ImageBase']]],
-  ['grn_31',['GRN',['../_a_n_s_i-color-codes_8h.html#aea69ffbacdcdf16c21b8c9961df84448',1,'ANSI-color-codes.h']]],
-  ['grnb_32',['GRNB',['../_a_n_s_i-color-codes_8h.html#a906e1183ece851df294cfd43b14561c8',1,'ANSI-color-codes.h']]],
-  ['grnhb_33',['GRNHB',['../_a_n_s_i-color-codes_8h.html#ad1c69f0fbadaa9bef5acfb1aac37cbbb',1,'ANSI-color-codes.h']]]
+  ['grn_31',['GRN',['../a_n_s_i-color-codes_8h.html#aea69ffbacdcdf16c21b8c9961df84448',1,'ANSI-color-codes.h']]],
+  ['grnb_32',['GRNB',['../a_n_s_i-color-codes_8h.html#a906e1183ece851df294cfd43b14561c8',1,'ANSI-color-codes.h']]],
+  ['grnhb_33',['GRNHB',['../a_n_s_i-color-codes_8h.html#ad1c69f0fbadaa9bef5acfb1aac37cbbb',1,'ANSI-color-codes.h']]]
 ];
