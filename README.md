@@ -98,8 +98,6 @@ $ ./Paillier_pgm_main.out decryption -k [PRIVATE KEY FILE .BIN] [FILE.PGM]
 
 `-optlsbr16` or `-olsbr16` to specify that we want to use bit compression with encrypted through optimized r generation mod(16), so free 4 LSB. 
 
-WARNING : You can't combine `-distribution` and `-optlsbr32` or  `-optlsbr16`, if you do that the priority is `-optlsbr32` / `-optlsbr16`.
-
 <!-- 
 \verb|-optlsbrcomp| ou \verb|-olsbrc|  pour préciser qu'on souhaite utiliser la "compression" des pixels chiffrés en générant des valeurs aléatoires \(r\) favorable et en utilisant des compléments de chiffré pour élargir les valeurs.\\
 
