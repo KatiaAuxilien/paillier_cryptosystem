@@ -1,8 +1,8 @@
-# Code of Conduct for the code_base_obscuration Project
+# Code of Conduct for the encryption_images_Paillier Project
 
 ## Introduction
 
-This document outlines the expectations and rules of conduct for all contributors and users of the code_base_obscuration project. By participating in this project, you agree to abide by this code of conduct.
+This document outlines the expectations and rules of conduct for all contributors and users of the encryption_images_Paillier project. By participating in this project, you agree to abide by this code of conduct.
 
 ## Our Principles
 
